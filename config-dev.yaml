@@ -1,0 +1,11 @@
+nacos:
+  ip:
+  port:
+  namespace_id:
+  data_id:
+  group:
+  timeout:
+  not_load_cache_at_start:
+  log_dir:
+  cache_dir:
+  log_level:
