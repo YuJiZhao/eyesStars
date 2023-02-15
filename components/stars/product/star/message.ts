@@ -1,7 +1,8 @@
 import * as zrender from "zrender";
+import config from "@/config";
 
 // 寄语星星
-export default (zlevel: number) => {
+export default (clickFunc: () => void) => {
     let star = new zrender.Star({
         shape: {
             cx: 80,
@@ -16,11 +17,8 @@ export default (zlevel: number) => {
             shadowColor: "rgb(15, 245, 145)",
             opacity: 0.8, // 0.2 - 0.6
         },
-        zlevel
+        zlevel: config.dynamicZLevel
     });
-    star.on("click", () => {
-        console.log(12);
-        star.off("click");
-    });
+    star.on("click", clickFunc);
     return star;
 }

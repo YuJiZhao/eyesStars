@@ -1,7 +1,8 @@
 import * as zrender from "zrender";
+import config from "@/config";
 
 // 流星
-export default (zlevel: number) => {
+export default () => {
     let meteor = new zrender.Droplet({
         shape: {
             cx: 290,
@@ -16,7 +17,7 @@ export default (zlevel: number) => {
             shadowOffsetX: 0,
             shadowOffsetY: -2
         },
-        zlevel
+        zlevel: config.dynamicZLevel
     });
     meteor.on("click", () => {
     });

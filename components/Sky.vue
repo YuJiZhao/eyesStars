@@ -4,7 +4,9 @@
 
 <script setup lang="ts">
 import * as zrender from "zrender";
-import { drawDynamic, drawStatic } from "@/components/stars/factory";
+import { drawProvision, drawPermanent } from "@/components/stars/script";
+
+const monitor = useMonitor();
 
 // 初始化画布
 function initCanvas() {
@@ -17,8 +19,8 @@ function initCanvas() {
 // 绘制画布
 function drawCanvas(canvas: HTMLCanvasElement) {
   let zr = zrender.init(canvas);
-  zr.add(drawDynamic());
-  zr.add(drawStatic());
+  zr.add(drawProvision(monitor.value));
+  zr.add(drawPermanent(monitor.value));
 }
 
 onMounted(() => {

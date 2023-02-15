@@ -1,7 +1,8 @@
 import * as zrender from "zrender";
+import config from "@/config";
 
 // 背景装饰星星
-export default (zlevel: number) => {
+export default () => {
     return new zrender.Star({
         shape: {
             cx: 40,
@@ -17,6 +18,6 @@ export default (zlevel: number) => {
             opacity: 0.6, // 0.2 - 0.6
         },
         cursor: "default",
-        zlevel
+        zlevel: config.staticZLevel
     });
 }

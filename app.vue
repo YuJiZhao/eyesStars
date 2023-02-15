@@ -1,15 +1,17 @@
 <template>
-  <NuxtPage />
+  <NuxtPage v-if="isShow" />
 </template>
 
 <script setup lang="ts">
 import config from "@/config";
 import { useMonitor } from "./composables/useMonitor";
 import { initSite } from "@/request/api";
+import { LayoutModeEnum } from "@/constant/enum";
 
 const runtimeConfig = useRuntimeConfig();
 const monitorStore = useMonitor();
 const contextStore = useContext();
+let isShow = ref(false);
 
 // 初始化服务信息
 monitorStore.value.isServer = "isServer" in runtimeConfig;
@@ -37,14 +39,26 @@ if (monitorStore.value.isServer) {
  */
 function determineLayoutMode() {
   // 我更倾向于使用正常模式，因为翻转屏幕好麻烦，容易写出bug
-  return window.innerWidth / window.innerHeight > config.layoutModeThreshold;
+  if (window.innerWidth / window.innerHeight > config.layoutModeThreshold) {
+    initNormalMode();
+  } else {
+    initFlipMode();
+  }
 }
 
 // 正常模式数据准备
-function initNormalMode() {}
+function initNormalMode() {
+  monitorStore.value.layoutMode = LayoutModeEnum.NORMAL;
+  monitorStore.value.length = window.innerWidth;
+  monitorStore.value.height = window.innerHeight;
+}
 
 // 翻转模式数据准备
-function initFlipMode() {}
+function initFlipMode() {
+  monitorStore.value.layoutMode = LayoutModeEnum.Flip;
+  monitorStore.value.length = window.innerHeight;
+  monitorStore.value.height = window.innerWidth;
+}
 
 // 控制台打印应用标签
 function printAPPLabel() {
@@ -59,7 +73,8 @@ function printAPPLabel() {
 }
 
 onMounted(() => {
+  determineLayoutMode()
+  isShow.value = true;
   printAPPLabel();
-  determineLayoutMode();
 });
 </script>

@@ -1,20 +1,21 @@
 import * as zrender from "zrender";
 import { loadFont } from "@/utils/help";
+import config from "@/config";
 
 // 标语
-export default (zr: any, text: string, fontUrl: string, fontFamily: string) => {
+export default (zr: any, x: number, y: number, text: string, fontUrl: string, fontFamily: string, fontSize: number) => {
     loadFont(fontUrl, fontFamily, () => {
-        var slogan = new zrender.Text({
+        zr.add(new zrender.Text({
           style: {
-            x: 30,
-            y: 400,
-            text: text,
+            x,
+            y,
+            text,
             fill: "#fff",
-            fontSize: 20,
-            fontFamily: fontFamily
+            fontSize,
+            fontFamily
           },
           cursor: "default",
-        });
-        zr.add(slogan);
-      });
+          zlevel: config.staticZLevel
+        }));
+    });
 }

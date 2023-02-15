@@ -1,21 +1,20 @@
 import * as zrender from "zrender";
+import config from "@/config";
 
 // 月亮
-export default (img: string) => {
+export default (image: string, x: number, y: number, clickFunc: () => void) => {
     let moon = new zrender.Image({
         style: {
-            x: 150,
-            y: 150,
-            image: img,
+            x,
+            y,
+            image,
             width: 70,
             height: 70,
             shadowBlur: 5,
             shadowColor: "rgb(255, 255, 255)",
-            opacity: 1,
         },
+        zlevel: config.staticZLevel
     });
-    moon.on("click", () => {
-
-    });
+    moon.on("click", clickFunc);
     return moon;
 }
