@@ -74,7 +74,7 @@ func getZapCore() zapcore.Core {
 		encoder.AppendString(time.Format("[" + "2006-01-02 15:04:05.000" + "]"))
 	}
 	encoderConfig.EncodeLevel = func(l zapcore.Level, encoder zapcore.PrimitiveArrayEncoder) {
-		encoder.AppendString(global.Config.App.Env + "." + l.String())
+		encoder.AppendString(global.Native.Profiles.Active + "." + l.String())
 	}
 
 	// 设置编码器

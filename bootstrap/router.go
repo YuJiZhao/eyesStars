@@ -17,7 +17,7 @@ import (
  */
 
 func setupRouter() *gin.Engine {
-	if global.Config.App.Env == "prod" {
+	if global.Native.Profiles.Active == "prod" {
 		gin.SetMode(gin.ReleaseMode)
 	}
 	router := gin.New()

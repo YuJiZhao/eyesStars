@@ -22,7 +22,7 @@ type contextService struct {
 }
 
 var ContextService = contextService{
-	initSiteIds: []uint32{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12},
+	initSiteIds: []uint32{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13},
 }
 
 // InitSite 应用初始化配置信息
@@ -53,13 +53,7 @@ func (contextService contextService) InitSite() (err error, result returnee.Cont
 func (contextService contextService) ContextAdd(name string, content string, remarks interface{}) error {
 	// 判断配置是否已经存在
 	var context = entity.Context{}
-	tx := global.DB.Where(entity.Context{Name: name}).First(&context)
-	if err := tx.Error; err != nil {
-		global.Log.Error("程序错误！" + err.Error())
-		// 这是管理员接口，因此直接返回完整真实错误信息
-		return err
-	}
-	if tx.RowsAffected != 0 {
+	if tx := global.DB.Where(entity.Context{Name: name}).First(&context); tx.RowsAffected != 0 {
 		return common.CustomError{}.SetErrorMsg("该配置已存在！id:" + strconv.Itoa(int(context.Id)) + ";content:" + context.Content + ";remarks:" + context.Remarks)
 	}
 

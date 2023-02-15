@@ -30,7 +30,7 @@ func CustomRecovery() gin.HandlerFunc {
 func serverError(c *gin.Context, err interface{}) {
 	msg := "server error"
 	// 非生产环境显示具体错误信息
-	if global.Config.App.Env != "prod" && os.Getenv(gin.EnvGinMode) != gin.ReleaseMode {
+	if global.Native.Profiles.Active != "prod" && os.Getenv(gin.EnvGinMode) != gin.ReleaseMode {
 		if _, ok := err.(error); ok {
 			msg = err.(error).Error()
 		}

@@ -42,7 +42,7 @@ func Auth() gin.HandlerFunc {
 		}(transport)
 
 		// 权限校验，通过则获取身份信息
-		info, err := client.CheckAuthByDouble(c, global.Config.App.AppName, sToken, lToken)
+		info, err := client.CheckAuthByDouble(c, global.Config.App.Name, sToken, lToken)
 		if err != nil {
 			global.Log.Info("thrift鉴权错误！" + err.Error())
 			result.FailAttachedMsg(c, err.Error())

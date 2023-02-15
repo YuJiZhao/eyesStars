@@ -27,7 +27,7 @@ func InitializeDB() *gorm.DB {
 	case "mysql":
 		return initMySqlGorm()
 	default:
-		return initMySqlGorm()
+		panic("默认不支持该数据库驱动，请自行拓展")
 	}
 }
 

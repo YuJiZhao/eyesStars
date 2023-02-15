@@ -6,8 +6,8 @@ package returnee
  */
 
 type StarAdd struct {
-	Id         uint32
-	Content    string
-	Name       string
-	CreateTime string
+	Id         uint32 `json:"id"`
+	Content    string `json:"content"`
+	Name       string `json:"name"`
+	CreateTime string `json:"createTime"`
 }

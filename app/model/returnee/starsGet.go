@@ -6,6 +6,6 @@ package returnee
  */
 
 type StarsGet struct {
-	Ids   string
-	Stars string
+	Ids   string `json:"ids"`
+	Stars string `json:"stars"`
 }

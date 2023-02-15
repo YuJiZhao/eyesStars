@@ -1,11 +1,11 @@
 nacos:
-  ip:
-  port:
-  namespace_id:
-  data_id:
-  group:
-  timeout:
-  not_load_cache_at_start:
-  log_dir:
-  cache_dir:
-  log_level:
+  ip: 81.68.65.65
+  port: 8848
+  namespace_id: 4ed3f97b-e01c-43ca-aa10-ea49452cc522
+  data_id: program.json
+  group: dev
+  timeout: 10000  # ms
+  not_load_cache_at_start: true
+  log_dir: runtime/log/nacos
+  cache_dir: runtime/cache/nacos
+  log_level: debug

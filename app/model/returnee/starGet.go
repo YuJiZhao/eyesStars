@@ -6,7 +6,7 @@ package returnee
  */
 
 type StarGet struct {
-	Content    string
-	Name       string
-	CreateTime string
+	Content    string `json:"content"`
+	Name       string `json:"name"`
+	CreateTime string `json:"createTime"`
 }
