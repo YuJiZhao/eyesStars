@@ -4,9 +4,10 @@
 
 <script setup lang="ts">
 import * as zrender from "zrender";
-import { drawProvision, drawPermanent } from "@/components/stars/script";
+import { drawProvision, drawPermanent } from "@/components/paint/script";
 
 const monitor = useMonitor();
+const contextStore = useContext();
 
 // 初始化画布
 function initCanvas() {
@@ -19,8 +20,8 @@ function initCanvas() {
 // 绘制画布
 function drawCanvas(canvas: HTMLCanvasElement) {
   let zr = zrender.init(canvas);
-  zr.add(drawProvision(monitor.value));
-  zr.add(drawPermanent(monitor.value));
+  drawProvision(zr, monitor.value, contextStore.value);
+  drawPermanent(zr, monitor.value, contextStore.value);
 }
 
 onMounted(() => {

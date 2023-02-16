@@ -1,4 +1,4 @@
-interface ContextInterface {
+export interface ContextInterface {
     appName: string;
     appNameEN: string;
     appTitle: string;
