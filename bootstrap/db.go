@@ -34,7 +34,6 @@ func InitializeDB() *gorm.DB {
 // 初始化 mysql gorm.DB
 func initMySqlGorm() *gorm.DB {
 	dbConfig := global.Config.Database
-
 	if dbConfig.Database == "" {
 		return nil
 	}

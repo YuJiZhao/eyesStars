@@ -19,4 +19,9 @@ type ContextInitSite struct {
 	SloganFontUrl    string `json:"sloganFontUrl"`    // 页脚标语字体文件地址
 	AesKey           string `json:"sesKey"`           // aes密钥
 	MoonUrl          string `json:"moonUrl"`          // 月亮图片
+	Notice           string `json:"notice"`           // 公告内容
+	GithubAddress    string `json:"githubAddress"`    // 项目代码仓库
+	AuthorSite       string `json:"authorSite"`       // 站长个人网站
+	DefaultAvatar    string `json:"defaultAvatar"`    // 默认用户头像
+	MessageMaxLen    string `json:"messageMaxLen"`    // 寄语内容最大长度
 }

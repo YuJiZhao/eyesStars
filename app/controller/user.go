@@ -26,8 +26,8 @@ import (
 // @Security		sToken,lToken
 // @Param			sToken		header  	string				true		"短token"
 // @Param			lToken		header  	string				true		"长token"
-// @Success			200			{object}	response.Response
-// @Failure			400			{object}	response.Response
+// @Success			200			{object}	result.Response
+// @Failure			400			{object}	result.Response
 // @Router			/user/userInfoGet [get]
 func UserInfoGet(c *gin.Context) {
 	// 权限校验
@@ -57,8 +57,8 @@ func UserInfoGet(c *gin.Context) {
 // @Param			sToken		header  	string					true		"短token"
 // @Param			lToken		header  	string					true		"长token"
 // @Param			receiver	body    	receiver.UserInfoUpdate	true		"请求参数"
-// @Success			200			{object}	response.Response
-// @Failure			400			{object}	response.Response
+// @Success			200			{object}	result.Response
+// @Failure			400			{object}	result.Response
 // @Router			/user/userInfoUpdate [put]
 func UserInfoUpdate(c *gin.Context) {
 	// 权限校验
@@ -95,8 +95,8 @@ func UserInfoUpdate(c *gin.Context) {
 // @Param			sToken		header  	string				true		"短token"
 // @Param			lToken		header  	string				true		"长token"
 // @Param			file		formData	file				true		"头像文件"
-// @Success			200			{object}	response.Response
-// @Failure			400			{object}	response.Response
+// @Success			200			{object}	result.Response
+// @Failure			400			{object}	result.Response
 // @Router			/user/userUpdateAvatar [post]
 func UserAvatarUpdate(c *gin.Context) {
 	// 权限校验

@@ -26,8 +26,8 @@ import (
 // @Param			sToken		header  	string				true		"短token"
 // @Param			lToken		header  	string				true		"长token"
 // @Param			receiver	body    	receiver.StarAdd	true		"请求参数"
-// @Success			200			{object}	response.Response
-// @Failure			400			{object}	response.Response
+// @Success			200			{object}	result.Response
+// @Failure			400			{object}	result.Response
 // @Router			/star/starAdd [post]
 func StarAdd(c *gin.Context) {
 	// 权限校验
@@ -58,7 +58,7 @@ func StarAdd(c *gin.Context) {
 
 // StarGetById
 // @Summary			通过id获取星星
-// @Description		权限：Visitor
+// @Description		权限：Admin
 // @Tags			star
 // @Accept			json
 // @Produce			json
@@ -66,12 +66,12 @@ func StarAdd(c *gin.Context) {
 // @Param			sToken		header		string				false		"短token"
 // @Param			lToken		header		string				false		"长token"
 // @Param			id			path		integer				true		"寄语id"		minimum(1)
-// @Success			200			{object}	response.Response
-// @Failure			400			{object}	response.Response
+// @Success			200			{object}	result.Response
+// @Failure			400			{object}	result.Response
 // @Router			/star/starGetById/{id} [get]
 func StarGetById(c *gin.Context) {
 	// 权限校验
-	if !common.CheckAuth(c, constant.Roles.Visitor) {
+	if !common.CheckAuth(c, constant.Roles.Admin) {
 		result.FailByCustom(c, result.Results.AuthInsufficient)
 		return
 	}
@@ -108,8 +108,8 @@ func StarGetById(c *gin.Context) {
 // @Param			sToken		header		string		false		"短token"
 // @Param			lToken		header		string 		false		"长token"
 // @Param			ids			query		string		false		"已读id密串"
-// @Success			200			{object}	response.Response
-// @Failure			400			{object}	response.Response
+// @Success			200			{object}	result.Response
+// @Failure			400			{object}	result.Response
 // @Router			/star/starsGet [get]
 func StarsGet(c *gin.Context) {
 	// 权限校验

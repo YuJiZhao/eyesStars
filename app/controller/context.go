@@ -24,8 +24,8 @@ import (
 // @Security		sToken,lToken
 // @Param			sToken		header		string		false		"短token"
 // @Param			lToken		header		string 		false		"长token"
-// @Success			200			{object}	response.Response
-// @Failure			400			{object}	response.Response
+// @Success			200			{object}	result.Response
+// @Failure			400			{object}	result.Response
 // @Router			/context/initSite [get]
 func ContextInitSite(c *gin.Context) {
 	// 权限校验
@@ -52,8 +52,8 @@ func ContextInitSite(c *gin.Context) {
 // @Param			sToken		header		string					true		"短token"
 // @Param			lToken		header		string 					true		"长token"
 // @Param			receiver	body		receiver.ContextAdd		true		"请求参数"
-// @Success			200			{object}	response.Response
-// @Failure			400			{object}	response.Response
+// @Success			200			{object}	result.Response
+// @Failure			400			{object}	result.Response
 // @Router			/context/contextAdd [post]
 func ContextAdd(c *gin.Context) {
 	// 权限校验
@@ -87,8 +87,8 @@ func ContextAdd(c *gin.Context) {
 // @Param			sToken		header		string		true			"短token"
 // @Param			lToken		header		string 		true			"长token"
 // @Param			receiver	body		receiver.ContextUpdate		true		"请求参数"
-// @Success			200			{object}	response.Response
-// @Failure			400			{object}	response.Response
+// @Success			200			{object}	result.Response
+// @Failure			400			{object}	result.Response
 // @Router			/context/contextUpdate [put]
 func ContextUpdate(c *gin.Context) {
 	// 权限校验

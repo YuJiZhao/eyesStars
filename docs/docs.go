@@ -70,13 +70,13 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/response.Response"
+                            "$ref": "#/definitions/result.Response"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/response.Response"
+                            "$ref": "#/definitions/result.Response"
                         }
                     }
                 }
@@ -129,13 +129,13 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/response.Response"
+                            "$ref": "#/definitions/result.Response"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/response.Response"
+                            "$ref": "#/definitions/result.Response"
                         }
                     }
                 }
@@ -177,13 +177,13 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/response.Response"
+                            "$ref": "#/definitions/result.Response"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/response.Response"
+                            "$ref": "#/definitions/result.Response"
                         }
                     }
                 }
@@ -236,13 +236,13 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/response.Response"
+                            "$ref": "#/definitions/result.Response"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/response.Response"
+                            "$ref": "#/definitions/result.Response"
                         }
                     }
                 }
@@ -292,13 +292,13 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/response.Response"
+                            "$ref": "#/definitions/result.Response"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/response.Response"
+                            "$ref": "#/definitions/result.Response"
                         }
                     }
                 }
@@ -346,13 +346,13 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/response.Response"
+                            "$ref": "#/definitions/result.Response"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/response.Response"
+                            "$ref": "#/definitions/result.Response"
                         }
                     }
                 }
@@ -436,7 +436,7 @@ const docTemplate = `{
                 "responses": {}
             }
         },
-        "/userThrift/userInfoGet": {
+        "/user/userInfoGet": {
             "get": {
                 "security": [
                     {
@@ -451,7 +451,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "userThrift"
+                    "user"
                 ],
                 "summary": "获取用户基本信息",
                 "parameters": [
@@ -474,19 +474,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/response.Response"
+                            "$ref": "#/definitions/result.Response"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/response.Response"
+                            "$ref": "#/definitions/result.Response"
                         }
                     }
                 }
             }
         },
-        "/userThrift/userInfoUpdate": {
+        "/user/userInfoUpdate": {
             "put": {
                 "security": [
                     {
@@ -501,7 +501,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "userThrift"
+                    "user"
                 ],
                 "summary": "修改用户基本信息",
                 "parameters": [
@@ -533,19 +533,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/response.Response"
+                            "$ref": "#/definitions/result.Response"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/response.Response"
+                            "$ref": "#/definitions/result.Response"
                         }
                     }
                 }
             }
         },
-        "/userThrift/userUpdateAvatar": {
+        "/user/userUpdateAvatar": {
             "post": {
                 "security": [
                     {
@@ -560,7 +560,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "userThrift"
+                    "user"
                 ],
                 "summary": "修改用户头像",
                 "parameters": [
@@ -590,13 +590,13 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/response.Response"
+                            "$ref": "#/definitions/result.Response"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/response.Response"
+                            "$ref": "#/definitions/result.Response"
                         }
                     }
                 }
@@ -678,7 +678,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.Response": {
+        "result.Response": {
             "type": "object",
             "properties": {
                 "code": {

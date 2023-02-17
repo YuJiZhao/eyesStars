@@ -52,7 +52,7 @@ definitions:
     required:
     - name
     type: object
-  response.Response:
+  result.Response:
     properties:
       code:
         description: 自定义错误码
@@ -103,11 +103,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/result.Response'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/result.Response'
       security:
       - sToken,lToken: []
       summary: 添加配置
@@ -141,11 +141,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/result.Response'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/result.Response'
       security:
       - sToken,lToken: []
       summary: 修改配置
@@ -171,11 +171,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/result.Response'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/result.Response'
       security:
       - sToken,lToken: []
       summary: 网站信息初始化
@@ -209,11 +209,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/result.Response'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/result.Response'
       security:
       - sToken,lToken: []
       summary: 添加星星
@@ -245,11 +245,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/result.Response'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/result.Response'
       security:
       - sToken,lToken: []
       summary: 通过id获取星星
@@ -279,11 +279,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/result.Response'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/result.Response'
       security:
       - sToken,lToken: []
       summary: 批量查询星星
@@ -361,16 +361,16 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/result.Response'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/result.Response'
       security:
       - sToken,lToken: []
       summary: 获取用户基本信息
       tags:
-      - userThrift
+      - user
   /user/userInfoUpdate:
     put:
       consumes:
@@ -399,16 +399,16 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/result.Response'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/result.Response'
       security:
       - sToken,lToken: []
       summary: 修改用户基本信息
       tags:
-      - userThrift
+      - user
   /user/userUpdateAvatar:
     post:
       consumes:
@@ -436,14 +436,14 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/result.Response'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/result.Response'
       security:
       - sToken,lToken: []
       summary: 修改用户头像
       tags:
-      - userThrift
+      - user
 swagger: "2.0"
