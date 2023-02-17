@@ -12,6 +12,11 @@ export interface ContextInterface {
     sloganFontUrl: string;
     aesKey: string;
     moonUrl: string;
+    notice: string;
+    githubAddress: string;
+    authorSite: string;
+    defaultAvatar: string;
+    messageMaxLen: string;
 }
 
 export const useContext = () => useState<Partial<ContextInterface>>("context", () => {

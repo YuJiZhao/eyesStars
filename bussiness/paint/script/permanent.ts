@@ -1,11 +1,12 @@
 import { MonitorInterface } from "@/composables/useMonitor";
 import { ContextInterface } from "@/composables/useContext";
-import { sloganFactory, moonFactory, decorateStarFactory } from "@/components/paint/factory";
+import { ProcessInterface } from "@/composables/useProcess";
+import { sloganFactory, moonFactory, decorateStarFactory } from "../factory";
 
 // 绘制常驻元素
-export let drawPermanent = (zr: any, monitor: MonitorInterface, context: Partial<ContextInterface>) => {
+export let drawPermanent = (zr: any, monitor: MonitorInterface, context: Partial<ContextInterface>, process: ProcessInterface) => {
     drawSlogan(zr, monitor, context);
-    drawMoon(zr, monitor, context);
+    drawMoon(zr, monitor, context, process);
     drawDecorateStar(zr, monitor);
 }
 
@@ -23,12 +24,17 @@ function drawSlogan(zr: any, monitor: MonitorInterface, context: Partial<Context
 }
 
 // 月亮
-function drawMoon(zr: any, monitor: MonitorInterface, context: Partial<ContextInterface>) {
+function drawMoon(zr: any, monitor: MonitorInterface, context: Partial<ContextInterface>, process: ProcessInterface) {
     zr.add(moonFactory(
         monitor.layoutMode,
         monitor.length,
         monitor.height,
-        context.moonUrl!
+        context.moonUrl!,
+        () => {
+            process.isShowPublish = false;
+            process.isShowStar = false;
+            process.isShowNotice = !process.isShowNotice;
+        }
     ));
 }
 

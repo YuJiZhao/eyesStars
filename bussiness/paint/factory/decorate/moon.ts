@@ -1,11 +1,16 @@
-import { moon } from "@/components/paint/product";
+import { moon } from "@/bussiness/paint/product";
 import { LayoutModeEnum } from "@/constant/enum";
 import config from "@/config";
 
 // 月亮工厂
-export default (mode: LayoutModeEnum, length: number, height: number, image: string) => {
+export default (mode: LayoutModeEnum, length: number, height: number, image: string, clickFunc: () => void) => {
     let position = mode == LayoutModeEnum.NORMAL ? normalPosition(length, height) : flipPosition(length, height);
-    return moon(image, position.x, position.y);
+    return moon(
+        image, 
+        position.x, 
+        position.y, 
+        clickFunc
+    );
 }
 
 // 正常模式位置

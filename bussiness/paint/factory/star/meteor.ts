@@ -1,4 +1,4 @@
-import { meteorStar } from "@/components/paint/product";
+import { meteorStar } from "@/bussiness/paint/product";
 import { LayoutModeEnum } from "@/constant/enum";
 import config from "@/config";
 import { getDoubleRandom } from "@/utils/help";

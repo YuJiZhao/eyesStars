@@ -1,4 +1,4 @@
-import { slogan } from "@/components/paint/product";
+import { slogan } from "@/bussiness/paint/product";
 import { LayoutModeEnum } from "@/constant/enum";
 import config from "@/config";
 

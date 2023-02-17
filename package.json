@@ -12,7 +12,10 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.6",
+    "animate.css": "^4.1.1",
     "crypto-js": "^4.1.1",
+    "reset-css": "^5.0.1",
+    "sass": "^1.43.4",
     "zrender": "^5.4.1"
   }
 }

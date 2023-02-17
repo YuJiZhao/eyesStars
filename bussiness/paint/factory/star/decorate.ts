@@ -1,24 +1,19 @@
 import * as zrender from "zrender";
-import { messageStar } from "@/components/paint/product";
+import { decorateStar } from "@/bussiness/paint/product";
 import { LayoutModeEnum } from "@/constant/enum";
 import config from "@/config";
 import { getDoubleRandom } from "@/utils/help";
 
-// 寄语星星工厂
+// 装饰星星工厂
 export default (mode: LayoutModeEnum, length: number, height: number) => {
     let group = new zrender.Group();
-    let starNum = config.messageStarNum * length * height;
+    let starNum = config.decorateStarNum * length * height;
     for (let i = 0; i < starNum; i++) {
         let position = mode == LayoutModeEnum.NORMAL ? normalPosition(length, height) : flipPosition(length, height);
-        let star = messageStar(
+        group.add(decorateStar(
             position.x,
-            position.y,
-            () => {
-                alert("我是寄语星星");
-                group.remove(star);
-            }
-        );
-        group.add(star);
+            position.y
+        ));
     }
     return group;
 }

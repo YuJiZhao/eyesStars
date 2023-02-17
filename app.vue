@@ -11,6 +11,7 @@ import { LayoutModeEnum } from "@/constant/enum";
 const runtimeConfig = useRuntimeConfig();
 const monitorStore = useMonitor();
 const contextStore = useContext();
+const userStore = useUser();
 let isShow = ref(false);
 
 // 初始化服务信息
@@ -25,6 +26,16 @@ if (monitorStore.value.isServer) {
       console.error("配置初始化错误!赶紧debug!" + msg);
     }
   });
+}
+
+// 客户端数据获取，初始化用户信息
+if (!monitorStore.value.isServer) {
+  if (localStorage.getItem(config.storageKey.token)) {
+
+  } else {
+    userStore.value.isLoggedin = false;
+    userStore.value.avatar = contextStore.value.defaultAvatar!;
+  }
 }
 
 /**

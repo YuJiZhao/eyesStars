@@ -1,10 +1,16 @@
 <template>
   <Sky />
+  <DialogTip :show="processStore.isShowTip" :msg="processStore.tipMsg" />
+  <DialogNotice :show="processStore.isShowNotice" />
+  <DialogPublish :show="processStore.isShowPublish" />
+  <DialogStar :show="processStore.isShowStar" />
 </template>
 
 <script setup lang="ts">
 const contextStore = useContext();
+const processStore = useProcess();
 
+// SEO处理
 useHead({
   title: contextStore.value.appTitle,
   meta: [
@@ -13,6 +19,7 @@ useHead({
   ],
   link: [{ rel: "icon", type: "image/x-icon", href: contextStore.value.favicon }],
 });
+
 </script>
 
 <style>

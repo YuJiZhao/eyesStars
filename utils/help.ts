@@ -48,3 +48,35 @@ export function getDoubleRandom(min: number, max: number) {
 export function getIntRandom(min: number, max: number) {
     return min + Math.round((max - min) * Math.random());
 }
+
+// 防抖
+export function debounce(fn: () => void, delay = 1000) {
+    let timer: NodeJS.Timeout;
+    return () => {
+        if (timer) {
+            clearTimeout(timer);
+        }
+        timer = setTimeout(() => {
+            fn();
+        }, delay)
+    }
+}
+
+// 节流
+export function throttle(fn: () => void, delay = 1000) {
+    let timer: NodeJS.Timeout | null;
+    return () => {
+        if(timer) {
+            return;
+        }
+        timer = setTimeout(() => {
+            fn();
+            timer = null;
+        }, delay)
+    }
+}
+
+// 延时
+export function delayed(fn: () => void, delay = 1000) {
+
+}

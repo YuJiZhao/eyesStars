@@ -2,7 +2,7 @@ import * as zrender from "zrender";
 import config from "@/config";
 
 // 月亮
-export default (image: string, x: number, y: number) => {
+export default (image: string, x: number, y: number, clickFunc: () => void) => {
     let moon = new zrender.Image({
         style: {
             x,
@@ -15,8 +15,6 @@ export default (image: string, x: number, y: number) => {
         },
         zlevel: config.staticZLevel
     });
-    moon.on("click", () => {
-        alert("我是月亮");
-    });
+    moon.on("click", clickFunc);
     return moon;
 }
