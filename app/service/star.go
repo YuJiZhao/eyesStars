@@ -5,12 +5,17 @@ import (
 	"errors"
 	"eyesStars/app/common"
 	"eyesStars/app/constant"
+	"eyesStars/app/model/dto"
 	"eyesStars/app/model/entity"
 	"eyesStars/app/model/po"
 	"eyesStars/app/model/receiver"
-	returnee2 "eyesStars/app/model/returnee"
+	"eyesStars/app/model/returnee"
+	"eyesStars/app/rpc/generate/userThrift"
+	"eyesStars/app/rpc/rpc"
 	"eyesStars/app/utils"
 	"eyesStars/global"
+	"github.com/apache/thrift/lib/go/thrift"
+	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/copier"
 	"gorm.io/gorm"
 	"strconv"
@@ -29,13 +34,13 @@ type starService struct {
 var StarService = starService{5}
 
 // AddStar 添加星星
-func (starsService *starService) AddStar(data receiver.StarAdd, uid uint32) (err error, result returnee2.StarAdd) {
-	result = returnee2.StarAdd{}
+func (starsService *starService) AddStar(data receiver.StarAdd, uid uint32) (err error, result returnee.StarAdd) {
+	result = returnee.StarAdd{}
 	star := entity.Star{
 		Uid:       uid,
 		Content:   data.Content,
 		Name:      data.Name,
-		EmailNeed: data.EmailNeed,
+		Anonymous: data.Anonymous,
 	}
 
 	// 插入数据库
@@ -55,8 +60,8 @@ func (starsService *starService) AddStar(data receiver.StarAdd, uid uint32) (err
 }
 
 // GetStarById 根据id查询星星
-func (starsService *starService) GetStarById(id uint32) (err error, result returnee2.StarGet) {
-	result = returnee2.StarGet{}
+func (starsService *starService) GetStarById(id uint32) (err error, result returnee.StarGet) {
+	result = returnee.StarGet{}
 
 	// 查询数据库
 	var star entity.Star
@@ -86,10 +91,10 @@ func (starsService *starService) GetStarById(id uint32) (err error, result retur
 }
 
 // GetStars 批量获取星星
-func (starsService *starService) GetStars(ids string) (err error, result returnee2.StarsGet) {
+func (starsService *starService) GetStars(c *gin.Context, ids string) (err error, result returnee.StarsGet) {
 	// 拼接执行sql，随机获取记录
 	sql := func(status uint8, notIn string, num uint8) string {
-		return `SELECT t1.id, t1.content, t1.name, t1.create_time FROM star t1 
+		return `SELECT t1.id, t1.uid, t1.content, t1.name, t1.anonymous, t1.create_time FROM star t1 
 				JOIN (
 					SELECT floor(
 						rand()*((SELECT max(id) FROM star)-(SELECT min(id) FROM star)+1)+(SELECT min(id) FROM star)
@@ -141,10 +146,60 @@ func (starsService *starService) GetStars(ids string) (err error, result returne
 		}
 	}
 
+	// 组装非匿名uid
+	var uidList []uint64
+	for _, v := range stars {
+		if !v.Anonymous && !utils.Contains(uidList, v.Uid) {
+			uidList = append(uidList, v.Uid)
+		}
+	}
+
+	// 获取非匿名用户信息
+	var uid2Info = map[uint64]*userThrift.UserInfoReturnee{}
+	if len(uidList) != 0 {
+		// 连接耶瞳用户中心
+		err, client, transport := rpc.User()
+		if err != nil {
+			return common.CustomError{}.SetErrorMsg("用户中心服务似乎宕机了"), result
+		}
+		defer func(transport thrift.TTransport) {
+			closeErr := transport.Close()
+			if closeErr != nil {
+				global.Log.Error("UserService:thrift连接关闭异常！" + closeErr.Error())
+			}
+		}(transport)
+
+		// 获取数据
+		_, tUidList := utils.Uint64ToInt64Slice(uidList)
+		userInfoList, err := client.GetBatchUserInfo(c, tUidList)
+		for _, v := range userInfoList {
+			uid2Info[uint64(v.ID)] = v
+		}
+	}
+
+	// 构建数据
+	var completeStarList []dto.CompleteStar
+	for _, v := range stars {
+		completeStar := dto.CompleteStar{}
+		_ = copier.Copy(&completeStar, &v)
+		if v.Anonymous {
+			completeStar.Avatar = global.Config.Program.DefaultAvatar
+			completeStar.Name = global.Config.Program.DefaultName
+		} else {
+			completeStar.Avatar = uid2Info[v.Uid].Avatar
+			completeStar.Name = uid2Info[v.Uid].Username
+		}
+		if v.Name != "" {
+			completeStar.Name = v.Name
+		}
+		completeStar.CreateTime = v.CreateTime.Format("2006-01-02 15:04:05")
+		completeStarList = append(completeStarList, completeStar)
+	}
+
 	// 返回结果
-	jsonStars, _ := json.Marshal(stars)
-	return err, returnee2.StarsGet{
-		Ids:   utils.AesEncrypt(string(jsonStars)),
-		Stars: utils.AesEncrypt(ids),
+	jsonStars, _ := json.Marshal(completeStarList)
+	return err, returnee.StarsGet{
+		Ids:   utils.AesEncrypt(ids),
+		Stars: utils.AesEncrypt(string(jsonStars)),
 	}
 }

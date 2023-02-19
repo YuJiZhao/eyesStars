@@ -134,7 +134,7 @@ func StarsGet(c *gin.Context) {
 	}
 
 	// 执行业务
-	if err, resultInfo := service.StarService.GetStars(ids); err != nil {
+	if err, resultInfo := service.StarService.GetStars(c, ids); err != nil {
 		result.FailAttachedMsg(c, err.Error())
 	} else {
 		result.SuccessDefault(c, resultInfo)

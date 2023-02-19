@@ -3,11 +3,14 @@ package service
 import (
 	"eyesStars/app/common"
 	"eyesStars/app/model/receiver"
+	"eyesStars/app/model/returnee"
 	"eyesStars/app/rpc/generate/userThrift"
 	"eyesStars/app/rpc/rpc"
+	"eyesStars/app/utils"
 	"eyesStars/global"
 	thrift "github.com/apache/thrift/lib/go/thrift"
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/copier"
 	"mime/multipart"
 )
 
@@ -22,7 +25,7 @@ type userService struct {
 var UserService = new(userService)
 
 // GetInfo 获取用户基本信息
-func (userService userService) GetInfo(c *gin.Context, uid uint32) (err error, result *userThrift.UserInfoReturnee) {
+func (userService userService) GetInfo(c *gin.Context, uid uint32) (err error, result returnee.UserInfo) {
 	// 连接耶瞳用户中心
 	err, client, transport := rpc.User()
 	if err != nil {
@@ -36,11 +39,18 @@ func (userService userService) GetInfo(c *gin.Context, uid uint32) (err error, r
 	}(transport)
 
 	// 获取用户基本信息
-	result, err = client.GetUserInfo(c, int64(uid))
+	userInfo, err := client.GetUserInfo(c, int64(uid))
 	if err != nil {
 		global.Log.Error("UserService.GetUserInfo:thrift调用错误！" + err.Error())
 		return common.CustomError{}.SetErrorMsg("用户信息获取错误"), result
 	}
+
+	// 处理用户信息
+	err = copier.Copy(&result, &userInfo)
+	if err, sEmail := utils.SensitiveEmail(result.Email); err == nil {
+		result.Email = sEmail
+	}
+
 	return err, result
 }
 

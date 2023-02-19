@@ -17,7 +17,7 @@ type ContextInitSite struct {
 	Slogan           string `json:"slogan"`           // 页角标语
 	SloganFontFamily string `json:"sloganFontFamily"` // 页脚标语字体名称
 	SloganFontUrl    string `json:"sloganFontUrl"`    // 页脚标语字体文件地址
-	AesKey           string `json:"sesKey"`           // aes密钥
+	AesKey           string `json:"aesKey"`           // aes密钥
 	MoonUrl          string `json:"moonUrl"`          // 月亮图片
 	Notice           string `json:"notice"`           // 公告内容
 	GithubAddress    string `json:"githubAddress"`    // 项目代码仓库

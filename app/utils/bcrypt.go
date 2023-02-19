@@ -16,10 +16,6 @@ import (
  * @date 2023/1/29 10:35
  */
 
-var (
-	aesKey = global.Config.Program.AesKey
-)
-
 /*
  ***************************************************************************
                                   单向散列
@@ -51,8 +47,8 @@ func BCryptPsdCheck(pwd []byte, hashedPwd string) bool {
 // AesEncrypt AES(CBC)加密
 func AesEncrypt(str string) string {
 	origData := []byte(str)
+	aesKey := global.Config.Program.AesKey
 	k := []byte(aesKey)
-
 	block, _ := aes.NewCipher(k)
 	blockSize := block.BlockSize()
 	origData = sPKCS7Padding(origData, blockSize)
@@ -65,6 +61,7 @@ func AesEncrypt(str string) string {
 // AesDecrypt AES(CBC)解密
 func AesDecrypt(str string) (err error, decrypt string) {
 	cratedByte, _ := base64.StdEncoding.DecodeString(str)
+	aesKey := global.Config.Program.AesKey
 	k := []byte(aesKey)
 
 	block, _ := aes.NewCipher(k)

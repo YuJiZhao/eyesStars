@@ -11,4 +11,6 @@ type Program struct {
 	AesKey        string
 	StarMemoryLen uint8
 	StarsNum      uint8
+	DefaultAvatar string
+	DefaultName   string
 }

@@ -255,7 +255,7 @@ const docTemplate = `{
                         "sToken,lToken": []
                     }
                 ],
-                "description": "权限：Visitor",
+                "description": "权限：Admin",
                 "consumes": [
                     "application/json"
                 ],
@@ -648,18 +648,18 @@ const docTemplate = `{
                 "content"
             ],
             "properties": {
+                "anonymous": {
+                    "description": "\"是否匿名\"",
+                    "type": "boolean",
+                    "default": false
+                },
                 "content": {
                     "description": "\"提交内容\"",
                     "type": "string",
                     "maxLength": 300
                 },
-                "emailNeed": {
-                    "description": "\"是否需要寄送服务\"",
-                    "type": "boolean",
-                    "default": false
-                },
                 "name": {
-                    "description": "\"署名\"",
+                    "description": "\"化名\"",
                     "type": "string",
                     "maxLength": 10
                 }
