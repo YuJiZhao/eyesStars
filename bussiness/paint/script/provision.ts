@@ -1,8 +1,10 @@
 import * as zrender from "zrender";
+import config from "@/config";
 import { MonitorInterface } from "@/composables/useMonitor";
 import { ProcessInterface } from "@/composables/useProcess";
 import { meteorStarFactory, messageStarFactory } from "../factory";
-import config from "@/config";
+import { showDialog, switchStar } from "@/bussiness/process"; 
+import { DialogEnum } from "@/constant/enum";
 
 // 绘制临时元素
 export let drawProvision = (zr: any, monitor: MonitorInterface, process: ProcessInterface) => {
@@ -18,11 +20,7 @@ function drawMessageStar(group: any, monitor: MonitorInterface, process: Process
         monitor.layoutMode,
         monitor.length,
         monitor.height,
-        () => {
-            process.isShowPublish = false;
-            process.isShowNotice = false;
-            process.isShowStar = true;
-        }
+        () => switchStar()
     ));
 }
 

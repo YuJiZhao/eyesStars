@@ -15,8 +15,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import { LayoutModeEnum } from "@/constant/enum";
+import { showDialog } from "@/bussiness/process"; 
+import { DialogEnum } from "@/constant/enum";
+import config from "~~/config";
 
 defineProps({
   show: { type: Boolean },
@@ -25,6 +27,7 @@ defineProps({
 const monitorStore = useMonitor();
 const processStore = useProcess();
 const contextStore = useContext();
+let dialogDuration = ref(config.dialogDuration);
 let noticeClass = ref(
   monitorStore.value.layoutMode == LayoutModeEnum.NORMAL ? "normal" : "flip"
 );
@@ -38,8 +41,7 @@ function jumpTo(site: string) {
 }
 
 function goPublish() {
-  close();
-  processStore.value.isShowPublish = true;
+  showDialog(DialogEnum.PUBLISH);
 }
 </script>
 
@@ -52,10 +54,10 @@ $dialogWidthFlip: 450px;
 $dialogHeightFlip: 300px;
 
 .noticeAnimate-enter-active {
-  animation: zoomIn 0.5s;
+  animation: zoomIn 0.3s;
 }
 .noticeAnimate-leave-active {
-  animation: zoomOut 0.5s;
+  animation: zoomOut 0.3s;
 }
 
 .notice {

@@ -2,6 +2,8 @@ import { MonitorInterface } from "@/composables/useMonitor";
 import { ContextInterface } from "@/composables/useContext";
 import { ProcessInterface } from "@/composables/useProcess";
 import { sloganFactory, moonFactory, decorateStarFactory } from "../factory";
+import { showDialog } from "@/bussiness/process"; 
+import { DialogEnum } from "@/constant/enum";
 
 // 绘制常驻元素
 export let drawPermanent = (zr: any, monitor: MonitorInterface, context: Partial<ContextInterface>, process: ProcessInterface) => {
@@ -30,11 +32,7 @@ function drawMoon(zr: any, monitor: MonitorInterface, context: Partial<ContextIn
         monitor.length,
         monitor.height,
         context.moonUrl!,
-        () => {
-            process.isShowPublish = false;
-            process.isShowStar = false;
-            process.isShowNotice = !process.isShowNotice;
-        }
+        () => showDialog(DialogEnum.NOTICE)
     ));
 }
 

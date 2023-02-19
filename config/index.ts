@@ -1,14 +1,21 @@
 // 固定配置信息
 export default {
-    apiBaseUrl: "http://127.0.0.1:8888",    // 接口服务器地址：TODO: 记得改成环境变量
     storageKey: {                           // 本地存储key
-        token: "token"
+        sToken: "sToken",                   // 短token
+        lToken: "lToken",                   // 长token
+        ids: "ids",                         // 已读星星id加密列表
+        stars: "stars",                     // 未读星星加密缓存
     },
+    successCode: 200,                       // 接口成功状态码
+    failCode: 400,                          // 接口失败状态码
     layoutModeThreshold: 0.8,               // 翻转阈值
     userInfoDefault: {                      // 用户信息默认占位值
         username: "未登录",
         email: "********@***.***"
     },
+    tipDuration: 3000,                      // tip弹窗停留时间
+    dialogDuration: 300,                    // 弹窗动画时间(tip除外)
+    anonymousName: "匿名用户",               // 用户匿名时名称展示
     dynamicZLevel: 0,                       // 动态元素层级
     staticZLevel: 1,                        // 静态元素层级
     moonSize: 70,                           // 月亮尺寸
@@ -37,7 +44,7 @@ export default {
         max: 1.5
     },
     decorateStarFill: {                     // 背景星星填充色范围
-        min: 205,
+        min: 225,
         max: 255
     },
     decorateStarOpacity: {                  // 背景星星透明度范围
@@ -57,7 +64,7 @@ export default {
         max: 2
     },
     messageStarFill: {                      // 寄语星星填充色范围
-        min: 184,
+        min: 215,
         max: 255
     },
     messageStarOpacity: {                   // 寄语星星透明度范围
@@ -66,5 +73,4 @@ export default {
     },
     messageStarNum: 1 / 10000,              // 寄语星星密度(a/b，每b平方像素内a个)
     messageStarAnimateDuration: 5000,       // 寄语星星动画执行时间
-    tipDuration: 2000,                      // tip弹窗停留时间
 }

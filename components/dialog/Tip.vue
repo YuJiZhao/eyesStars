@@ -36,10 +36,10 @@ watch(
 @import "@/assets/scss/global.scss";
 
 .tipAnimate-enter-active {
-  animation: bounceIn 0.8s;
+  animation: fadeIn 0.8s;
 }
 .tipAnimate-leave-active {
-  animation: bounceOut 0.8s;
+  animation: fadeOut 0.8s;
 }
 
 .tip {

@@ -4,23 +4,29 @@
 
 <script setup lang="ts">
 import config from "@/config";
-import { useMonitor } from "./composables/useMonitor";
-import { initSite } from "@/request/api";
+import { useMonitor } from "@/composables/useMonitor";
+import { initProcess } from "@/bussiness/process";
+import { initHttp } from "@/request/request";
+import { initSite, initUser } from "@/request/api";
 import { LayoutModeEnum } from "@/constant/enum";
+import { aesDecrypt } from "@/utils/help";
 
 const runtimeConfig = useRuntimeConfig();
 const monitorStore = useMonitor();
 const contextStore = useContext();
 const userStore = useUser();
+const processStore = useProcess();
 let isShow = ref(false);
 
 // 初始化服务信息
 monitorStore.value.isServer = "isServer" in runtimeConfig;
+initProcess(processStore.value);
+initHttp(monitorStore.value.isServer, runtimeConfig.public.baseUrl);
 
 // 服务端数据获取，初始化配置信息
 if (monitorStore.value.isServer) {
   initSite().then(({ code, msg, data }) => {
-    if (code == 200) {
+    if (code == config.successCode) {
       contextStore.value = data;
     } else {
       console.error("配置初始化错误!赶紧debug!" + msg);
@@ -30,8 +36,18 @@ if (monitorStore.value.isServer) {
 
 // 客户端数据获取，初始化用户信息
 if (!monitorStore.value.isServer) {
-  if (localStorage.getItem(config.storageKey.token)) {
-
+  if (localStorage.getItem(config.storageKey.sToken) && localStorage.getItem(config.storageKey.lToken)) {
+    initUser().then(({code, msg, data}) => {
+      if (code == config.successCode) {
+        userStore.value.isLoggedin = true;
+        userStore.value.username = data.username;
+        userStore.value.avatar = data.avatar;
+        userStore.value.email = data.email;
+      } else {
+        processStore.value.tipMsg = msg;
+        processStore.value.isShowTip = true;
+      }
+    });
   } else {
     userStore.value.isLoggedin = false;
     userStore.value.avatar = contextStore.value.defaultAvatar!;

@@ -1,8 +1,10 @@
 {
   "private": true,
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "nuxt dev --dotenv env/.env.dev",
+    "dev-test": "nuxt dev --dotenv env/.env.test",
+    "dev-prod": "nuxt dev --dotenv env/.env.prod",
+    "build": "nuxt build --dotenv env/.env.prod",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
@@ -14,6 +16,7 @@
     "@pinia/nuxt": "^0.4.6",
     "animate.css": "^4.1.1",
     "crypto-js": "^4.1.1",
+    "dotenv": "^16.0.3",
     "reset-css": "^5.0.1",
     "sass": "^1.43.4",
     "zrender": "^5.4.1"

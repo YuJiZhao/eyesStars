@@ -4,7 +4,10 @@
       <div class="close"><span @click="close">×</span></div>
       <!-- 个人信息 -->
       <div class="userInfo">
-        <div class="avatar" :style="{backgroundImage: 'url(' + userStore.avatar + ')'}"></div>
+        <div class="avatar" 
+          :style="{ backgroundImage: 'url(' + userStore.avatar + ')' }"
+          @click="goUserCenter"
+          ></div>
         <div class="infoBox">
           <div class="name">{{ userStore.username }}</div>
           <div class="email">{{ userStore.email }}</div>
@@ -12,21 +15,29 @@
       </div>
       <!-- 发布区 -->
       <div class="publishBox">
-        <textarea autofocus :placeholder="placeholder"></textarea>
+        <textarea v-model="body.content" :placeholder="placeholder" :maxlength="msgMaxLen"></textarea>
       </div>
       <!-- 功能区 -->
       <div class="ribbon">
-        <input class="alias" type="text" placeholder="使用化名">
-        <div class="btn anonymousBox">是否匿名</div>
-        <div class="btn publishBtn">点击发布</div>
+        <input class="alias" type="text" placeholder="使用化名" v-model="body.name"/>
+        <div
+          :class="{ btn: true, anonymousBox: true, active: body.anonymous }"
+          @click="body.anonymous = !body.anonymous"
+        >
+          是否匿名
+        </div>
+        <div class="btn publishBtn" @click="publishStar">点击发布</div>
       </div>
     </div>
   </transition>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { LayoutModeEnum } from "@/constant/enum";
+import { DialogEnum, LayoutModeEnum } from "@/constant/enum";
+import { addStar } from "@/request/api";
+import { showDialog, showTip } from "@/bussiness/process";
+import config from "@/config";
+import { aesDecrypt, aesEncrypt } from "@/utils/help";
 
 defineProps({
   show: { type: Boolean },
@@ -36,8 +47,20 @@ const monitorStore = useMonitor();
 const processStore = useProcess();
 const contextStore = useContext();
 const userStore = useUser();
-let publishClass = ref(monitorStore.value.layoutMode == LayoutModeEnum.NORMAL ? "normal" : "flip");
-let placeholder = ref(`${userStore.value.isLoggedin ? "" : "仅登录用户可发布，"}最多${contextStore.value.messageMaxLen}字。`);
+const starStore = useStar();
+let publishClass = ref(
+  monitorStore.value.layoutMode == LayoutModeEnum.NORMAL ? "normal" : "flip"
+);
+let placeholder = ref(
+  `仅登录用户可发布，最多${contextStore.value.messageMaxLen}字。`
+);
+let msgMaxLen = ref(contextStore.value.messageMaxLen);
+let body = reactive({
+  content: "",
+  name: "",
+  anonymous: false,
+});
+let lock = false;  // 锁，防止多次提交
 
 function close() {
   processStore.value.isShowPublish = false;
@@ -45,6 +68,75 @@ function close() {
 
 function jumpTo(site: string) {
   window.open(site);
+}
+
+// 未登录则前往登录，已登录则查看信息
+function goUserCenter() {
+  alert("等我把用户中心写完");
+}
+
+// 将发布的星星存入内存与本地存储
+function storageNewStar(id: number, name: string, avatar: string, createTime: string, content: string) {
+  let newStar = {
+    Id: id,
+    Name: name,
+    Avatar: avatar,
+    CreateTime: createTime,
+    Content: content
+  };
+  starStore.value.stars.push(newStar);
+  let encryptStars = localStorage.getItem(config.storageKey.stars);
+  if (encryptStars != null) {
+    try {
+      let jsonStars = aesDecrypt(encryptStars, contextStore.value.aesKey!);
+      let objectStars = JSON.parse(jsonStars);
+      objectStars.push(newStar);
+      localStorage.setItem(config.storageKey.stars, aesEncrypt(JSON.stringify(objectStars), contextStore.value.aesKey!));
+    } catch {
+      localStorage.setItem(config.storageKey.stars, aesEncrypt(JSON.stringify([newStar]), contextStore.value.aesKey!));
+    }
+  } else {
+    localStorage.setItem(config.storageKey.stars, aesEncrypt(JSON.stringify([newStar]), contextStore.value.aesKey!));
+  }
+}
+
+// 发布星星
+async function publishStar() {
+  if (!lock) {
+    if (body.content == "") {
+      showTip("内容不能为空");
+      return;
+    }
+    if (body.content.length > contextStore.value.messageMaxLen!) {
+      showTip(`内容不能超过${contextStore.value.messageMaxLen}字`);
+      return;
+    }
+
+    lock = true;
+    await addStar({...body}).then(({code, msg, data}) => {
+      if (code == config.successCode) {
+        showTip(`第${data.id}颗星星发布成功`);
+        
+        // 跳转star弹窗
+        storageNewStar(
+          data.id,
+          data.name == "" ? (body.anonymous ? config.anonymousName : userStore.value.username) : data.name,
+          body.anonymous ? contextStore.value.defaultAvatar! : userStore.value.avatar,
+          data.createTime,
+          data.content
+        );
+        showDialog(DialogEnum.STAR);
+
+        // 清除数据
+        body.content = "";
+        body.name = "";
+        body.anonymous = false;
+      } else {
+        showTip(msg);
+      }
+      lock = false;
+    });
+  }
 }
 </script>
 
@@ -59,10 +151,10 @@ $avatarSize: 50px;
 $nameHeight: 30px;
 
 .publishAnimate-enter-active {
-  animation: zoomIn 0.5s;
+  animation: zoomIn 0.3s;
 }
 .publishAnimate-leave-active {
-  animation: zoomOut 0.5s;
+  animation: zoomOut 0.3s;
 }
 
 .publish {
@@ -148,16 +240,18 @@ $nameHeight: 30px;
       }
       &:-moz-placeholder {
         color: $normalColor;
+        opacity: 1;
         font-size: 15px;
         transition: 0.3s;
         transform: translateY(1.5px);
       }
       &::-moz-placeholder {
         color: $normalColor;
+        opacity: 1;
         font-size: 15px;
         transition: 0.3s;
         transform: translateY(1.5px);
-      } 
+      }
       &:-ms-input-placeholder {
         color: $normalColor;
         font-size: 15px;
@@ -167,19 +261,35 @@ $nameHeight: 30px;
       &:hover {
         background: #999;
         color: #fff;
-        &::-webkit-input-placeholder { color: #fff; }
-        &:-moz-placeholder { color: #fff; }
-        &::-moz-placeholder { color: #fff; }
-        &:-ms-input-placeholder { color: #fff; }
+        &::-webkit-input-placeholder {
+          color: #fff;
+        }
+        &:-moz-placeholder {
+          color: #fff;
+        }
+        &::-moz-placeholder {
+          color: #fff;
+        }
+        &:-ms-input-placeholder {
+          color: #fff;
+        }
       }
       &:focus {
         background: none;
         width: 120px;
         color: $normalColor;
-        &::-webkit-input-placeholder { color: #999; }
-        &:-moz-placeholder { color: #999; }
-        &::-moz-placeholder { color: #999; }
-        &:-ms-input-placeholder { color: #999; }
+        &::-webkit-input-placeholder {
+          color: #999;
+        }
+        &:-moz-placeholder {
+          color: #999;
+        }
+        &::-moz-placeholder {
+          color: #999;
+        }
+        &:-ms-input-placeholder {
+          color: #999;
+        }
       }
     }
     .btn {
@@ -196,6 +306,10 @@ $nameHeight: 30px;
         background: #999;
         color: #fff;
       }
+    }
+    .active {
+      background: #999;
+      color: #fff;
     }
   }
 }

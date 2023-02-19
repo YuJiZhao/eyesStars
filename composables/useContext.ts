@@ -16,7 +16,7 @@ export interface ContextInterface {
     githubAddress: string;
     authorSite: string;
     defaultAvatar: string;
-    messageMaxLen: string;
+    messageMaxLen: number;
 }
 
 export const useContext = () => useState<Partial<ContextInterface>>("context", () => {
