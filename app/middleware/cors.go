@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"eyesStars/app/constant"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
@@ -13,9 +14,9 @@ import (
 func Cors() gin.HandlerFunc {
 	config := cors.DefaultConfig()
 	config.AllowAllOrigins = true
-	config.AllowHeaders = []string{"Origin", "Content-Length", "Content-Type", "sToken", "lToken"}
+	config.AllowHeaders = []string{"Origin", "Content-Length", "Content-Type", constant.Auth.SToken, constant.Auth.LToken}
 	config.AllowCredentials = true
-	config.ExposeHeaders = []string{"sToken", "lToken"}
+	config.ExposeHeaders = []string{constant.Auth.SToken, constant.Auth.LToken}
 
 	return cors.New(config)
 }

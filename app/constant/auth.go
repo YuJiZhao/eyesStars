@@ -15,8 +15,8 @@ type auth struct {
 
 var Auth = auth{
 	AuthFlag: "flag",
-	SToken:   "sToken",
-	LToken:   "lToken",
+	SToken:   "sAuth",
+	LToken:   "lAuth",
 	CUid:     "uid",
 	CRole:    "role",
 }
