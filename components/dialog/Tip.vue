@@ -1,8 +1,8 @@
 <template>
   <div :class="'tip tip_' + tipClass">
-    <transition-group name="tipAnimate">
+    <transition name="tipAnimate">
       <div class="word" v-if="show">{{ msg }}</div>
-    </transition-group>
+    </transition>
   </div>
 </template>
 

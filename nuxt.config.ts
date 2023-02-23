@@ -2,7 +2,8 @@ export default defineNuxtConfig({
     runtimeConfig: {
         isServer: true,
         public: {
-            baseUrl: process.env.VITE_API_DOMAIN
+            siteUrl: process.env.VITE_SITE_URL,
+            baseUrl: process.env.VITE_API_DOMAIN,
         }
     },
     css: [

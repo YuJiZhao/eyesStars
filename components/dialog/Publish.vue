@@ -43,6 +43,7 @@ defineProps({
   show: { type: Boolean },
 });
 
+const runtimeConfig = useRuntimeConfig();
 const monitorStore = useMonitor();
 const processStore = useProcess();
 const contextStore = useContext();
@@ -72,7 +73,11 @@ function jumpTo(site: string) {
 
 // 未登录则前往登录，已登录则查看信息
 function goUserCenter() {
-  alert("等我把用户中心写完");
+  if (userStore.value.isLoggedin) {
+    window.open(config.userCenter.info);
+  } else {
+    window.open(`${config.userCenter.auth}?clientId=${config.appId}&redirectUrl=${runtimeConfig.public.siteUrl + config.userCenter.redirectUrl}`);
+  }
 }
 
 // 将发布的星星存入内存与本地存储

@@ -14,40 +14,36 @@ let initData = {
 
 // 请求封装
 const fetch = (url: string, options?: any): Promise<RespInterface> => {
-    beforeFetch(options);
-    
     return new Promise((resolve, reject) => {
         useFetch(url, {
             baseURL: initData.baseUrl,
-            ...options
-        }).then(({ data, error, pending }) => {
-            if (error.value) {
-                if (!initData.isServer) {
-                    showTip("应该是服务器崩了,或者程序出bug了");
+            ...options,
+            onRequest({ options }) {
+                options.headers = {};
+                if (!initData.isServer && localStorage.getItem(config.storageKey.sToken) && localStorage.getItem(config.storageKey.lToken)) {
+                    options.headers[config.storageKey.sToken] = localStorage.getItem(config.storageKey.sToken)!;
+                    options.headers[config.storageKey.lToken] = localStorage.getItem(config.storageKey.lToken)!;
                 }
-                reject(error.value);
-                return;
+            },
+            onResponse({ response }) {
+                let sToken = response.headers.get(config.storageKey.sToken);
+                let lToken = response.headers.get(config.storageKey.lToken);
+                if (sToken && lToken) {
+                    localStorage.setItem(config.storageKey.sToken, sToken);
+                    localStorage.setItem(config.storageKey.lToken, lToken);
+                }
+                resolve(response._data as RespInterface);
+            },
+            onResponseError({ response }) {
+                showTip("应该是服务器崩了,或者程序出bug了");
+                reject(response);
+            },
+            onRequestError({ response }) {
+                showTip("我猜是你设备的问题");
+                reject(response);
             }
-            // TODO: 垃圾东西，useFetch没请求完也tm的执行then
-            let timer = setInterval(() => {
-                if (!pending.value) {
-                    resolve(data.value as RespInterface);
-                    clearInterval(timer);
-                }
-            })
         });
     });
-}
-
-// 请求拦截器
-const beforeFetch = (options: any) => {
-    options.headers = {};
-
-    // 添加鉴权请求头
-    if (!initData.isServer && localStorage.getItem(config.storageKey.sToken) && localStorage.getItem(config.storageKey.lToken)) {
-        options.headers[config.storageKey.sToken] = localStorage.getItem(config.storageKey.sToken);
-        options.headers[config.storageKey.lToken] = localStorage.getItem(config.storageKey.lToken);
-    }
 }
 
 // 初始化请求配置
