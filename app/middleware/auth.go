@@ -51,8 +51,8 @@ func Auth() gin.HandlerFunc {
 		}
 
 		// 设置sToken、lToken响应头
-		c.Writer.Header().Set(constant.Auth.SToken, info.SToken)
-		c.Writer.Header().Set(constant.Auth.LToken, info.LToken)
+		c.Header(constant.Auth.SToken, info.SToken)
+		c.Header(constant.Auth.LToken, info.LToken)
 		// 设置用户信息
 		c.Set(constant.Auth.CUid, uint32(info.UID))
 		c.Set(constant.Auth.CRole, info.Role)
