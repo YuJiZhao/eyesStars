@@ -8,6 +8,7 @@ import (
 	"eyesStars/app/utils"
 	"eyesStars/global"
 	"github.com/gin-gonic/gin"
+	"net/url"
 	"strconv"
 )
 
@@ -38,7 +39,7 @@ func TrackVisit(c *gin.Context) {
 	uid, _ := c.Get(constant.Auth.CUid)
 
 	// 参数校验
-	encryptPkg := c.Query("package")
+	encryptPkg, _ := url.QueryUnescape(c.Query("package"))
 	err, decryptPkg := utils.AesDecrypt(encryptPkg)
 	if err != nil {
 		var uidStr string
@@ -77,7 +78,7 @@ func TrackLogin(c *gin.Context) {
 	uid, _ := c.Get(constant.Auth.CUid)
 
 	// 参数校验
-	encryptPkg := c.Query("package")
+	encryptPkg, _ := url.QueryUnescape(c.Query("package"))
 	err, decryptPkg := utils.AesDecrypt(encryptPkg)
 	if err != nil {
 		var uidStr string

@@ -6,19 +6,7 @@ package dto
  */
 
 type TrackVisit struct {
-	path    string // 进站路径
-	os      string // 客户端操作系统
-	browser string // 客户端浏览器
-}
-
-func (trackVisit TrackVisit) GetPath() string {
-	return trackVisit.path
-}
-
-func (trackVisit TrackVisit) GetOS() string {
-	return trackVisit.os
-}
-
-func (trackVisit TrackVisit) GetBrowser() string {
-	return trackVisit.browser
+	Path    string `json:"path"`    // 进站路径
+	OS      string `json:"os"`      // 客户端操作系统
+	Browser string `json:"Browser"` // 客户端浏览器
 }

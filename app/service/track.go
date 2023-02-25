@@ -36,10 +36,10 @@ func (trackService trackService) TrackVisit(uid interface{}, ip string, pkg stri
 	// 执行日志操作
 	LogService.Visit(
 		uid,
-		pkgStruct.GetPath(),
+		pkgStruct.Path,
 		ip,
-		pkgStruct.GetOS(),
-		pkgStruct.GetBrowser(),
+		pkgStruct.OS,
+		pkgStruct.Browser,
 	)
 }
 
@@ -62,10 +62,10 @@ func (trackService trackService) TrackLogin(uid interface{}, ip string, pkg stri
 	// 执行日志操作
 	LogService.Login(
 		uid,
-		pkgStruct.GetPattern(),
-		pkgStruct.GetPath(),
+		pkgStruct.Pattern,
+		pkgStruct.Path,
 		ip,
-		pkgStruct.GetOS(),
-		pkgStruct.GetBrowser(),
+		pkgStruct.OS,
+		pkgStruct.Browser,
 	)
 }
