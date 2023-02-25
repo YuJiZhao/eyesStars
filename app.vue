@@ -7,10 +7,11 @@ import config from "@/config";
 import { useMonitor } from "@/composables/useMonitor";
 import { initProcess } from "@/bussiness/process";
 import { initHttp } from "@/request/request";
-import { initSite, initUser } from "@/request/api";
+import { initSite, initUser, visitTrack } from "@/request/api";
 import { LayoutModeEnum } from "@/constant/enum";
-import { aesDecrypt } from "@/utils/help";
+import { aesEncrypt, browser, OS } from "@/utils/help";
 
+const route = useRoute();
 const runtimeConfig = useRuntimeConfig();
 const monitorStore = useMonitor();
 const contextStore = useContext();
@@ -99,9 +100,22 @@ function printAPPLabel() {
   );
 }
 
+// 埋点记录
+function addVisitTrack() {
+  if (!monitorStore.value.isServer) {
+    let jsonParam = JSON.stringify({
+      path: route.fullPath,
+      os: OS(),
+      browser: browser()
+    });
+    visitTrack({ package: encodeURIComponent(aesEncrypt(jsonParam, contextStore.value.aesKey!)) });
+  }
+}
+
 onMounted(() => {
   determineLayoutMode()
   isShow.value = true;
   printAPPLabel();
+  addVisitTrack();
 });
 </script>

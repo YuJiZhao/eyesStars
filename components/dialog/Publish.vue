@@ -34,15 +34,17 @@
 
 <script setup lang="ts">
 import { DialogEnum, LayoutModeEnum } from "@/constant/enum";
-import { addStar } from "@/request/api";
+import { addStar, loginTrack } from "@/request/api";
 import { showDialog, showTip } from "@/bussiness/process";
 import config from "@/config";
-import { aesDecrypt, aesEncrypt } from "@/utils/help";
+import { aesDecrypt, aesEncrypt, browser, OS } from "@/utils/help";
+import { LoginPatternEnum } from "@/constant/enum";
 
 defineProps({
   show: { type: Boolean },
 });
 
+const route = useRoute();
 const runtimeConfig = useRuntimeConfig();
 const monitorStore = useMonitor();
 const processStore = useProcess();
@@ -73,11 +75,21 @@ function jumpTo(site: string) {
 
 // 未登录则前往登录，已登录则查看信息
 function goUserCenter() {
+  let pattern;
   if (userStore.value.isLoggedin) {
-    window.open(config.userCenter.info);
+    pattern = LoginPatternEnum.INFO;
+    window.open(`${config.userCenter.info}?clientId=${config.appId}`);
   } else {
+    pattern = LoginPatternEnum.LOGIN;
     window.open(`${config.userCenter.auth}?clientId=${config.appId}&redirectUrl=${runtimeConfig.public.siteUrl + config.userCenter.redirectUrl}`);
   }
+  let jsonParam = JSON.stringify({
+    pattern,
+    path: route.fullPath,
+    os: OS(),
+    browser: browser()
+  });
+  loginTrack({ package: encodeURIComponent(aesEncrypt(jsonParam, contextStore.value.aesKey!)) });
 }
 
 // 将发布的星星存入内存与本地存储

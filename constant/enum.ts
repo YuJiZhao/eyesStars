@@ -8,3 +8,8 @@ export enum DialogEnum {
     PUBLISH,
     STAR
 }
+
+export enum LoginPatternEnum {
+    LOGIN,
+    INFO
+}
