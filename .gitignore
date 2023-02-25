@@ -3,4 +3,6 @@ target/
 *.iml
 *.log
 cache/
-*.yaml
+config.yaml
+config-dev.yaml
+config-prod.yaml
