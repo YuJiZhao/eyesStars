@@ -119,6 +119,10 @@ function storageNewStar(id: number, name: string, avatar: string, createTime: st
 
 // 发布星星
 async function publishStar() {
+  if (!userStore.value.isLoggedin) {
+    showTip("请先登录");
+    return;
+  }
   if (!lock) {
     if (body.content == "") {
       showTip("内容不能为空");

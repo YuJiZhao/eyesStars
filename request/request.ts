@@ -39,7 +39,7 @@ const fetch = (url: string, options?: any): Promise<RespInterface> => {
                 reject(response);
             },
             onRequestError({ response }) {
-                showTip("我猜是你设备的问题");
+                showTip("我也不知道出什么问题了");
                 reject(response);
             }
         });

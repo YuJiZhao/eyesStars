@@ -15,8 +15,8 @@ export default {
         email: "********@***.***"
     },
     userCenter: {                                   // 用户中心信息
-        info: "http://localhost:5175",              // 信息页地址
-        auth: "http://localhost:5175/OAuth2",       // 授权页地址
+        info: "http://user.eyescode.top",           // 信息页地址
+        auth: "http://user.eyescode.top/OAuth2",    // 授权页地址
         redirectUrl: "/auth",                       // 重定向相对地址
     },
     tipDuration: 3000,                              // tip弹窗停留时间

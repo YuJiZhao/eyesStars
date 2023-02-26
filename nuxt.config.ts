@@ -9,5 +9,12 @@ export default defineNuxtConfig({
     css: [
         "reset-css/reset.css",
         'animate.css/animate.min.css'
-    ]
+    ],
+    app: {
+        head: {
+            script: [
+                {src: "/js/statistics.js"}
+            ]
+        }
+    }
 })

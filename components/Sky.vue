@@ -3,8 +3,14 @@
 </template>
 
 <script setup lang="ts">
-import * as zrender from "zrender";
+import { init } from "zrender";
+import { registerPainter } from 'zrender';
+import CanvasPainter from 'zrender/lib/canvas/Painter';
+import SVGPainter from 'zrender/lib/svg/Painter';
 import { drawProvision, drawPermanent } from "@/bussiness/paint/script";
+
+registerPainter('canvas', CanvasPainter);
+registerPainter('svg', SVGPainter);
 
 const monitorStore = useMonitor();
 const contextStore = useContext();
@@ -20,7 +26,7 @@ function initCanvas() {
 
 // 绘制画布
 function drawCanvas(canvas: HTMLCanvasElement) {
-  let zr = zrender.init(canvas);
+  let zr = init(canvas);
   drawProvision(zr, monitorStore.value, processStore.value);
   drawPermanent(zr, monitorStore.value, contextStore.value, processStore.value);
 }
