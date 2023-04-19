@@ -15,7 +15,7 @@ import (
 // @description 耶瞳星空，来自星星的寄语
 // @contact.name   耶瞳
 // @contact.url    http://space.eyesspace.top
-// @contact.email  eyesyeager@gmail.com
+// @contact.email  eyesyeager@163.com
 // @license.name  Apache 2.0
 // @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
 func main() {

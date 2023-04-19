@@ -17,5 +17,5 @@ type Star struct {
 	EmailFlag  bool      `json:"email_flag" gorm:"default:false;comment:是否已经邮件通知"`
 	Status     uint8     `json:"status" gorm:"not null;default:0;comment:0->正常,1->冻结,2->删除"`
 	CreateTime time.Time `json:"create_time" gorm:"autoCreateTime"`
-	DeleteTime time.Time `json:"delete_time"`
+	DeleteTime time.Time `json:"delete_time" gorm:"default:null;"`
 }

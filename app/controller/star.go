@@ -49,10 +49,10 @@ func StarAdd(c *gin.Context) {
 	// 执行业务
 	if err, resultInfo := service.StarService.AddStar(data, uid.(uint32)); err != nil {
 		result.FailAttachedMsg(c, err.Error())
-		go service.LogService.Star(uid, nil, constant.LogStar.Search, false, utils.GetIP(c))
+		go service.LogService.Star(uid, nil, constant.LogStar.Create, false, utils.GetIP(c))
 	} else {
 		result.SuccessDefault(c, resultInfo)
-		go service.LogService.Star(uid, resultInfo.Id, constant.LogStar.Search, true, utils.GetIP(c))
+		go service.LogService.Star(uid, resultInfo.Id, constant.LogStar.Create, true, utils.GetIP(c))
 	}
 }
 

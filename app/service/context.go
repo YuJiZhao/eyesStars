@@ -6,7 +6,6 @@ import (
 	"eyesStars/app/model/po"
 	"eyesStars/app/model/returnee"
 	"eyesStars/global"
-	"fmt"
 	"github.com/mitchellh/mapstructure"
 	"strconv"
 )
@@ -108,8 +107,6 @@ func (contextService contextService) ContextUpdate(name string, content string) 
 		global.Log.Error("修改配置错误！" + err.Error())
 		return err
 	}
-
-	fmt.Println(context)
 
 	// 记录日志
 	if err = LogService.Context(context); err != nil {
