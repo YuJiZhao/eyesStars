@@ -16,23 +16,19 @@ const monitorStore = useMonitor();
 const contextStore = useContext();
 const processStore = useProcess();
 
-// 初始化画布
-function initCanvas() {
+// 初始化并绘制画布
+function drawCanvas() {
   let canvas = <HTMLCanvasElement>document.getElementById("canvas");
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  drawCanvas(canvas);
-}
-
-// 绘制画布
-function drawCanvas(canvas: HTMLCanvasElement) {
-  let zr = init(canvas);
+  let zr = init(canvas, {
+    width: window.innerWidth,
+    height: window.innerHeight
+  });
   drawProvision(zr, monitorStore.value, processStore.value);
   drawPermanent(zr, monitorStore.value, contextStore.value, processStore.value);
 }
 
 onMounted(() => {
-  initCanvas();
+  drawCanvas();
 });
 </script>
 

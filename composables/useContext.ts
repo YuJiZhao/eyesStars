@@ -17,6 +17,7 @@ export interface ContextInterface {
     authorSite: string;
     defaultAvatar: string;
     messageMaxLen: number;
+    videoAddr: string;
 }
 
 export const useContext = () => useState<Partial<ContextInterface>>("context", () => {

@@ -12,7 +12,7 @@ export default (mode: LayoutModeEnum, length: number, height: number, zr: any, t
         mode == LayoutModeEnum.NORMAL ? 0 : 90,
         text, 
         fontUrl, 
-        fontFamily, 
+        fontFamily,
         mode == LayoutModeEnum.NORMAL ? config.sloganSizeNormal : config.sloganSizeFlip
     );
 }

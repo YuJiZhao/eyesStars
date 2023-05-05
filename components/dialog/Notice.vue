@@ -7,7 +7,7 @@
       <div class="btnGroup">
         <div @click="goPublish">发布星星</div>
         <div @click="jumpTo(contextStore.authorSite)">关于作者</div>
-        <div @click="jumpTo(contextStore.authorSite)">视频介绍</div>
+        <div @click="jumpTo(contextStore.videoAddr)">视频介绍</div>
         <div @click="jumpTo(contextStore.githubAddress)">代码仓库</div>
       </div>
     </div>

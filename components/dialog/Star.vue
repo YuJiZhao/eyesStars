@@ -193,7 +193,6 @@ $nameHeight: 30px;
       height: $avatarSize;
       background-size: 100% 100%;
       border-radius: 50%;
-      cursor: pointer;
     }
     .infoBox {
       height: $avatarSize;
