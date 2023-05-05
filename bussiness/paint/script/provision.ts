@@ -3,8 +3,7 @@ import config from "@/config";
 import { MonitorInterface } from "@/composables/useMonitor";
 import { ProcessInterface } from "@/composables/useProcess";
 import { meteorStarFactory, messageStarFactory } from "../factory";
-import { showDialog, switchStar } from "@/bussiness/process"; 
-import { DialogEnum } from "@/constant/enum";
+import { switchStar } from "@/bussiness/process"; 
 
 // 绘制临时元素
 export let drawProvision = (zr: any, monitor: MonitorInterface, process: ProcessInterface) => {
@@ -27,7 +26,9 @@ function drawMessageStar(group: any, monitor: MonitorInterface, process: Process
 // 绘制流星
 function drawMeteorStar(group: any, monitor: MonitorInterface) {
     setInterval(() => {
-        if (Math.random() < config.meteorStarChance) {
+        // 如果当前页被折叠，浏览器为了节约性能会停止执行动画，当用户切回当前页后，才集中执行
+        // 为防止用户长时间折叠页面后再进入出现多个流星的现象，绘制流星前需要判断是否在当前页
+        if (!document.hidden && Math.random() < config.meteorStarChance) {
             let meteorStar = meteorStarFactory(
                 monitor.layoutMode,
                 monitor.length,
