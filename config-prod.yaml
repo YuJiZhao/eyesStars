@@ -1,0 +1,11 @@
+nacos:
+  ip: 192.168.1.196
+  port: 15005
+  namespace_id: cc9e994b-b73d-4916-953b-a1ba933b00bb
+  data_id: context.json
+  group: prod
+  timeout: 10000  # ms
+  not_load_cache_at_start: true
+  log_dir: runtime/log/nacos
+  cache_dir: runtime/cache/nacos
+  log_level: debug

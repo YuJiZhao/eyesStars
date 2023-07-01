@@ -1,8 +1,8 @@
 nacos:
-  ip: 81.68.65.65
-  port: 8848
-  namespace_id: 4ed3f97b-e01c-43ca-aa10-ea49452cc522
-  data_id: program.json
+  ip: 192.168.1.196
+  port: 15005
+  namespace_id: cc9e994b-b73d-4916-953b-a1ba933b00bb
+  data_id: context.json
   group: dev
   timeout: 10000  # ms
   not_load_cache_at_start: true
