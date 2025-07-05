@@ -11,7 +11,7 @@ import (
  */
 
 // @title 耶瞳星空
-// @version 1.0
+// @version 1.0.0
 // @description 耶瞳星空，来自星星的寄语
 // @contact.name   耶瞳
 // @contact.url    http://space.eyesspace.top
@@ -21,7 +21,6 @@ import (
 func main() {
 	// 初始化配置
 	bootstrap.InitializeConfig()
-	bootstrap.InitNacos()
 	bootstrap.InitializeValidator()
 	global.Log = bootstrap.InitializeLog()
 	global.DB = bootstrap.InitializeDB()

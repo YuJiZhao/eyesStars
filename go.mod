@@ -10,7 +10,6 @@ require (
 	github.com/jinzhu/copier v0.3.5
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/mitchellh/mapstructure v1.5.0
-	github.com/nacos-group/nacos-sdk-go v1.1.4
 	github.com/spf13/viper v1.15.0
 	github.com/swaggo/files v0.0.0-20220728132757-551d4a08d97a
 	github.com/swaggo/gin-swagger v1.5.3

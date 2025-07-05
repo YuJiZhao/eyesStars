@@ -6,6 +6,7 @@ package config
  */
 
 type Config struct {
+	Profiles Profiles
 	App      App
 	Log      Log
 	Database Database
